@@ -37,6 +37,8 @@ class User {
     }
 }
 
+module.exports = User;
+
 // const user = new User('vanpho03@gmail.com', '12a3');
 // user.signUp(err => console.log(err));
 // user.signIn(err => console.log(err));
