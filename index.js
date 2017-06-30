@@ -18,4 +18,13 @@ app.post('/signUp', parser, (req, res) => {
     });
 });
 
+app.post('/signIn', parser, (req, res) => {
+    const { password, email } = req.body;
+    const user = new User(email, password);
+    user.signIn(err => {
+        if (err) return res.send('LOI_DANG_NHAP');
+        res.send('DANG_NHAP_THANH_CONG');
+    });
+});
+
 app.listen(3000, () => console.log('server started!'))
