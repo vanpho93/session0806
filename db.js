@@ -11,10 +11,10 @@ const pool = new pg.Pool({
     idleTimeoutMillis: 1000
 });
 
-function queryDB(sql, cb) {
+function queryDB(sql, arrayData, cb) {
     pool.connect((err, client) => {
         if (err) return cb(err);
-        client.query(sql, cb);
+        client.query(sql, arrayData, cb);
     });
 }
 

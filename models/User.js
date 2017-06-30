@@ -16,9 +16,9 @@ class User {
             const signUpSql = `
                 INSERT INTO public."User"(
                 email, password, phone, name)
-                VALUES ('${this.email}', '${encrypted}', '${this.phone}', '${this.name}');
+                VALUES ($1, $2, $3, $4);
             `;
-            queryDB(signUpSql, cb);
+            queryDB(signUpSql, [this.email, this.password, this.phone, this.email], cb);
         });
     }
 
