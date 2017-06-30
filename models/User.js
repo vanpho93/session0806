@@ -18,13 +18,13 @@ class User {
                 email, password, phone, name)
                 VALUES ($1, $2, $3, $4);
             `;
-            queryDB(signUpSql, [this.email, this.password, this.phone, this.email], cb);
+            queryDB(signUpSql, [this.email, encrypted, this.phone, this.name], cb);
         });
     }
 
     signIn(cb) {
-        const sql = `SELECT * FROM "User" WHERE email = '${this.email}'`;
-        queryDB(sql, (err, result) => {
+        const sql = `SELECT * FROM "User" WHERE email = $1`;
+        queryDB(sql, [this.email], (err, result) => {
             if (err) return cb(err);
             if (result.rows.length === 0) return cb(new Error('Email khong ton ta'));
             const encrypted = result.rows[0].password; 
@@ -37,6 +37,6 @@ class User {
     }
 }
 
-const user = new User('vanpho01@gmail.com', '12a3');
+// const user = new User('vanpho03@gmail.com', '12a3');
 // user.signUp(err => console.log(err));
-user.signIn(err => console.log(err));
+// user.signIn(err => console.log(err));
