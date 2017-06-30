@@ -1,4 +1,4 @@
-const { hash } = require('bcrypt');
+const { hash, compare } = require('bcrypt');
 const queryDB = require('../db');
 
 class User {
@@ -22,10 +22,21 @@ class User {
         });
     }
 
-    signIn() {
-
+    signIn(cb) {
+        const sql = `SELECT * FROM "User" WHERE email = '${this.email}'`;
+        queryDB(sql, (err, result) => {
+            if (err) return cb(err);
+            if (result.rows.length === 0) return cb(new Error('Email khong ton ta'));
+            const encrypted = result.rows[0].password; 
+            compare(this.password, encrypted, (errCompare, same) => {
+                if (errCompare) return cb(errCompare);
+                if (!same) return cb(new Error('Sai mat khau'));
+                cb(null);
+            });
+        });
     }
 }
 
-const user = new User('vanpho01@gmail.com', '123', 'Pho', '0218387218');
-user.signUp(err => console.log(err));
+const user = new User('vanpho01@gmail.com', '12a3');
+// user.signUp(err => console.log(err));
+user.signIn(err => console.log(err));
