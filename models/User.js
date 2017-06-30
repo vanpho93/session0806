@@ -1,3 +1,4 @@
+const { hash } = require('bcrypt');
 const queryDB = require('../db');
 
 class User {
@@ -9,12 +10,16 @@ class User {
     }
 
     signUp(cb) {
-        const signUpSql = `
-            INSERT INTO public."User"(
-            email, password, phone, name)
-            VALUES ('${this.email}', '${this.password}', '${this.phone}', '${this.name}');
-        `;
-        queryDB(signUpSql, cb);
+        hash(this.password, 8, (err, encrypted) => {
+            if (err) return cb(err);
+            //encrypted
+            const signUpSql = `
+                INSERT INTO public."User"(
+                email, password, phone, name)
+                VALUES ('${this.email}', '${encrypted}', '${this.phone}', '${this.name}');
+            `;
+            queryDB(signUpSql, cb);
+        });
     }
 
     signIn() {
