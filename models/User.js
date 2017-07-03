@@ -31,7 +31,7 @@ class User {
             compare(this.password, encrypted, (errCompare, same) => {
                 if (errCompare) return cb(errCompare);
                 if (!same) return cb(new Error('Sai mat khau'));
-                cb(null);
+                cb(null, result.rows[0].name);
             });
         });
     }
