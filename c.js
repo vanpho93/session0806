@@ -32,3 +32,20 @@ function div(a, b) {
     });
 }
 
+//4, 5, 6
+
+// add(4, 5)
+// .then(tong => mul(tong, 6))
+// .then(tich => div(tich, 2))
+// .then(dienTich => console.log(dienTich))
+// .catch(err => console.log(err.toString()));
+
+function tinhDienTich(a, b, h) {
+    return add(a, b)
+    .then(tong => mul(tong, h))
+    .then(tich => div(tich, 2))
+}
+
+tinhDienTich(4, 5, 6)
+.then(dienTich => console.log(dienTich))
+.catch(err => console.log(err));
