@@ -42,10 +42,13 @@ function div(a, b) {
 
 function tinhDienTich(a, b, h) {
     return add(a, b)
-    .then(tong => mul(tong, h))
+    .then(tong => {
+        return mul(tong, h);
+    })
     .then(tich => div(tich, 2))
 }
 
 tinhDienTich(4, 5, 6)
-.then(dienTich => console.log(dienTich))
+.then(dienTich => dienTich * 2)
+.then(x => console.log(x))
 .catch(err => console.log(err));
